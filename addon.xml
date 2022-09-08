@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="script.reliableresume" name="Reliable Resume" version="1.0.7" provider-name="devkid/stanley87/harryberlin">
+  <requires>
+    <import_off addon="xbmc.python" version="3.0.0" />
+  </requires>
+  <extension point="xbmc.python.script" library="default.py"></extension>
+  <extension point="xbmc.service" library="observer.py" start="login"></extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Resumes the last played media.</summary>
+    <description lang="en">Resumes the last played media reliably by saving the current media position persisently every couple of seconds (configurable). Therefore it also works when the system gets turned off by power loss. Based von ResumeX by stanley87.</description>
+    <platform>all</platform>
+    <website>https://github.com/harryberlin/script.reliableresume</website>
+    <news>[B]1.0.7[/B]
+- works before and after Kodi 19
+- new action to delete m3u files
+- add setting for debugging
+
+[B]1.0.6[/B]
+- support for kodi 19 matrix
+
+[B]1.0.5[/B]
+- bugfix/workaround when media is not present for kodi
+
+[B]1.0.4[/B]
+- added setting and function for volume restore
+- changed strings.xml to strings.po
+
+[B]1.0.3[/B]
+- switched playlist backup from xml to m3u
+
+[B]1.0.1[/B]
+- bugfix for play error message after restart, by missing media files
+
+[B]1.0.0[/B]
+- added setting to write all medias to music playlist
+
+[B]0.99[/B]
+- changed to Pause on Startup
+
+[B]0.98[/B]
+- Setting for Autostart
+  run the addon, if you have disabled autorun
+
+[B]0.97[/B]
+- add filename as listitem to playlist
+
+[B]0.96[/B]
+- installable for Kodi 16
+- inverted icon color
+</news>
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+      <screenshot></screenshot>
+    </assets>
+  </extension>
+</addon>

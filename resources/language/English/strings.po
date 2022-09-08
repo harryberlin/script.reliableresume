@@ -1,0 +1,73 @@
+# Kodi Media Center language file
+# Addon Name: Relaible Resume
+# Addon id: script.reliableresume
+# Addon Provider: devkid/stanley87/harryberlin
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: net@net.net\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: HarryBerlin\n"
+"Language-Team: English (Excel Macro with GoogleTraslator by HarryBerlin)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#30008"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#30000"
+msgid "Seconds between position saves"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Observe Video Playback"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Observe Audio Playback"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Rewind seconds when resume"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Pause on Startup"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Stores current playing Videos as Music-Playlist"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Autorun"
+msgstr ""
+
+msgctxt "#30007"
+msgid "Restore Volume"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Exclude Live TV"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Exclude HTTP sources"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Delete M3U Files"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Debug"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Extra"
+msgstr ""
