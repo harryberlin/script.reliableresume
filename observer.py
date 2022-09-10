@@ -88,7 +88,7 @@ class ResumeSaver(object):
 
     def loader(self):
         while not MONITOR.abortRequested():
-            xbmc.sleep(2000)
+            xbmc.sleep(1000)
 
             self.reloadConfigIfNeeded()
 
@@ -101,7 +101,7 @@ class ResumeSaver(object):
             self.playing = xbmc.Player().getPlayingFile()
             self.playlist = []
 
-            if self.playing.find("pvr://") > -1 and self.videoEnable: 
+            if self.playing.find('pvr://') > -1 and self.videoEnable:
                 if self.videoExcludeLiveTV:
                     debug('Video is PVR (Live TV), which is currently set as an excluded source.')
                     continue
@@ -218,7 +218,7 @@ def volume_get():
 
 def log(msg):
     if not PY2:
-        msg = msg.encode("utf-8", "surrogateescape").decode("ISO-8859-1")
+        msg = msg.encode('utf-8', 'surrogateescape').decode('ISO-8859-1')
     xbmc.log('%s: SRV: %s' % (ADDON_ID, msg), XBMC_LOG_LEVEL)
 
 
@@ -249,9 +249,10 @@ def main():
     m = ResumeSaver()
     try:
         m.loader()
-    except RuntimeError:
-        if not 'Unknown addon id' in RuntimeError.message:
-            raise RuntimeError.message
+    except RuntimeError as e:
+        #xbmc.log('%s: RuntimeError: %s' % (ADDON_ID, str(e)), XBMC_LOG_LEVEL) # only for debug
+        if not 'Unknown addon id' in str(e):
+            raise str(e)
     del m
 
 

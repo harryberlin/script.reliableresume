@@ -76,6 +76,7 @@ class ResumePlayer:
 
         self.plist.clear()
 
+
         self.plist.load(self.datafile)
         # log(self.plist.size())
         if self.plsize < 1:
@@ -98,7 +99,7 @@ class ResumePlayer:
             xbmc.Player().stop()
             return note('''Can't resume''', 'File from Playlist is not available')
 
-        if self.playing.find("pvr://") > -1:
+        if self.playing.find('pvr://') > -1:
             debug('Skip Seeking, because Video is PVR (Live TV)')
         else:
             self.seekTime(self.time)
@@ -230,7 +231,7 @@ def open_settings():
 
 def log(msg):
     if not PY2:
-        msg = msg.encode("utf-8", "surrogateescape").decode("ISO-8859-1")
+        msg = msg.encode('utf-8', 'surrogateescape').decode('ISO-8859-1')
     xbmc.log('%s: LDR: %s' % (ADDON_ID, msg), XBMC_LOG_LEVEL)
 
 
@@ -270,7 +271,7 @@ def delete_m3u():
         file_b_deleted = True
     except:
         pass
-    note('M3U Files deleted!', '%s %s' % ('ResumeSaverA.m3u' if file_a_deleted else '', 'ResumeSaverB.m3u' if file_b_deleted else ''))
+    note('M3U Files deleted!', '%s | %s' % ('ResumeSaverA.m3u' if file_a_deleted else '', 'ResumeSaverB.m3u' if file_b_deleted else ''))
 
 
 def main():
