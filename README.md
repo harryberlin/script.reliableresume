@@ -12,6 +12,7 @@ It is taken from kodi community:  [[RELEASE] script.reliableresume - Script to r
 
 ## Download
 1. From Releases page: [Link](https://github.com/harryberlin/script.reliableresume/releases)
+2. Latest from Branch "latest" included test features: [Download](https://github.com/harryberlin/script.reliableresume/archive/refs/heads/latest.zip)
 
 ## Tested Platforms
 - [x] Libreelec Raspberry 3 with Kodi 18
