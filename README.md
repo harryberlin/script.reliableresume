@@ -13,7 +13,6 @@ It is taken from kodi community:  [[RELEASE] script.reliableresume - Script to r
 ## Download
 1. From Releases page: [Link](https://github.com/harryberlin/script.reliableresume/releases)
 
-
 ## Tested Platforms
 - [x] Libreelec Raspberry 3 with Kodi 18
 - [x] Libreelec Raspberry 3 with Kodi 19
