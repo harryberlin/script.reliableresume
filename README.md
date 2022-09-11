@@ -4,11 +4,15 @@ This is a script that lets you continue playing a video/audio file from the posi
 It is taken from kodi community:  [[RELEASE] script.reliableresume - Script to resume last played media](https://forum.kodi.tv/showthread.php?tid=109310)
 
 ## How-To-Use:
--Install the script from the Settings->Addon menu
--Run it once from "Programs" (to have it configured for autoexec on startup)
--Restart XBMC/Kodi
--Now the script should be running and tracking the audio files you are playing. Use the configuration dialog of the script to enable it for video too or change other parameteres
--After playing run it again from "Programs" to have it resume your last played media
+- Install the script from the Settings->Addon menu
+- Run it once from "Programs" (to have it configured for autoexec on startup)
+- Restart XBMC/Kodi
+- Now the script should be running and tracking the audio files you are playing. Use the configuration dialog of the script to enable it for video too or change other parameteres
+- After playing run it again from "Programs" to have it resume your last played media
+
+## Download
+1. From Releases page: [Link](https://github.com/harryberlin/script.reliableresume/releases)
+
 
 ## Tested Platforms
 - [x] Libreelec Raspberry 3 with Kodi 18
@@ -18,7 +22,7 @@ It is taken from kodi community:  [[RELEASE] script.reliableresume - Script to r
 - [ ] OSMC Raspberry 3 with Kodi 18
 - [x] OSMC Raspberry 3 with Kodi 19
 - [x] VirtualBox Debian Buster with Kodi 19
-- [ ] Android
+- [x] Android
 - [ ] other platforms
 
 ## Issues with Kodi 19
