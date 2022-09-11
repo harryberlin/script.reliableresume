@@ -60,31 +60,43 @@ class ResumePlayer:
         else:
             return note('''Can't resume''', 'No File exist')
 
-        if self.plsize == False:  # there is no playlist
-            xbmc.Player().play(self.playing)
-            self.seekTime(self.time)
 
         if get_addon_setting('volume') and self.volume is not False:
             volume_set(self.volume)
 
-        if self.media == 'audio':
+        if self.media in ['audio', 'pvr/radio']:
             self.plist = xbmc.PlayList(0)
-        elif self.media == 'video':
+        elif self.media in ['video', 'pvr/tv']:
             self.plist = xbmc.PlayList(1)
         else:
             self.plist = xbmc.PlayList(0)
 
-        self.plist.clear()
-
-
-        self.plist.load(self.datafile)
-        # log(self.plist.size())
-        if self.plsize < 1:
-            return
-
-
         if self.playing:
-            xbmc.Player().play(item=self.plist, windowed=False, startpos=self.plpos)
+            debug('MEDIA IS: %s' % self.media)
+            if self.media == 'pvr/tv':
+                for counter in range(10, 0, -1):
+                    debug('wait for PVR TV Channels %s' % counter)
+                    xbmc.sleep(2000)
+                    if get_condition('Pvr.HasTVChannels'):
+                        break
+                    if counter == 0:
+                        return note('PVR Channels not available')
+
+            if self.media == 'pvr/radio':
+                for counter in range(10, 0, -1):
+                    debug('wait for PVR Radio Channels %s' % counter)
+                    xbmc.sleep(2000)
+                    if get_condition('PVR.HasRadioChannels'):
+                        break
+                    if counter == 0:
+                        return note('PVR Channels not available')
+
+            if self.plsize == False:
+                xbmc.Player().play(item=self.playing, windowed=False)
+            else:
+                self.plist.clear()
+                self.plist.load(self.datafile)
+                xbmc.Player().play(item=self.plist, windowed=False, startpos=self.plpos)
 
 
         self.can_play = False
@@ -254,6 +266,11 @@ def debug(string):
     if not get_addon_setting('debug'):
         return
     log('DEBUG: %s' % string)
+
+
+def get_condition(condition):
+    # example: get_condition('String.IsEmpty(System.Time(xx))')
+    return bool(xbmc.getCondVisibility(condition))
 
 
 def delete_m3u():

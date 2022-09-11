@@ -53,7 +53,7 @@ msgid "Restore Volume"
 msgstr ""
 
 msgctxt "#30009"
-msgid "Exclude Live TV"
+msgid "Exclude PVR (Live TV)"
 msgstr ""
 
 msgctxt "#30010"
@@ -70,4 +70,8 @@ msgstr ""
 
 msgctxt "#30013"
 msgid "Extra"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Exclude PVR (Live Radio)"
 msgstr ""

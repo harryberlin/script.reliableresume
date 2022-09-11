@@ -81,6 +81,7 @@ class ResumeSaver(object):
         if self.shouldReadConfig():
             self.videoEnable = get_addon_setting('observe_video')
             self.videoExcludeLiveTV = get_addon_setting('ExcludeLiveTV')
+            self.audioExcludeLiveRadio = get_addon_setting('ExcludeLiveRadio')
             self.videoExcludeHTTP = get_addon_setting('ExcludeHTTP')
             self.audioEnable = get_addon_setting('observe_audio')
             self.all_to_music = get_addon_setting('all_to_music')
@@ -101,17 +102,26 @@ class ResumeSaver(object):
             self.playing = xbmc.Player().getPlayingFile()
             self.playlist = []
 
-            if self.playing.find('pvr://') > -1 and self.videoEnable:
-                if self.videoExcludeLiveTV:
-                    debug('Video is PVR (Live TV), which is currently set as an excluded source.')
-                    continue
-                else:
-                    self.media = 'pvr'
-                    self.time = xbmc.Player().getTime()
+            if self.playing.find('pvr://') > -1:
+                if xbmc.Player().isPlayingAudio() and self.audioEnable:
+                    if self.audioExcludeLiveRadio:
+                        debug('Audio is PVR (Live Radio), which is currently set as an excluded source.')
+                        continue
+                    self.media = 'pvr/radio'
+                    self.plist = xbmc.PlayList(0)
+
+                elif xbmc.Player().isPlayingVideo() and self.videoEnable:
+                    if self.videoExcludeLiveTV:
+                        debug('Video is PVR (Live TV), which is currently set as an excluded source.')
+                        continue
+                    self.media = 'pvr/tv'
                     self.plist = xbmc.PlayList(1)
-                    self.plsize = '-'
-                    self.plpos = 0                    
-                    self.writedata()
+
+                self.time = 0.0 #xbmc.Player().getTime()
+                self.plsize = '-'
+                self.plpos = 0
+                self.writedata()
+
             elif xbmc.Player().isPlayingAudio() and self.audioEnable:
                 self.media = 'audio'
                 self.time = xbmc.Player().getTime()
@@ -175,8 +185,8 @@ class ResumeSaver(object):
                         temp = self.plist[i].getPath()
                         debug('%s\n' % temp)
                         f.write('%s\n' % temp)
-            debug('writing m3u tracks finished')
 
+            debug('writing m3u tracks finished')
 
             debug('writing extra tags started')
 
@@ -236,10 +246,17 @@ def get_addon_setting(id):
     if setting.lower() == 'false': return False
     return str(setting)
 
+
+def get_condition(condition):
+    # example: get_condition('String.IsEmpty(System.Time(xx))')
+    return bool(xbmc.getCondVisibility(condition))
+
+
 def debug(string):
     if not get_addon_setting('debug'):
         return
     log('DEBUG: %s' % string)
+
 
 def main():
     if os.access(ADDON_USER_PATH, os.F_OK) == 0:
