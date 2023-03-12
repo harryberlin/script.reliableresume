@@ -31,6 +31,7 @@ ADDON_VERSION = ADDON.getAddonInfo('version')
 ADDON_PATH = ADDON.getAddonInfo('path')
 ADDON_USER_PATH = os.path.join(xbmc_translate_path('special://userdata'), 'addon_data', ADDON_ID)
 ADDON_ICON = os.path.join(ADDON_PATH, 'icon.png')
+ADDON_ICON_STOP = os.path.join(ADDON_PATH, 'resources', 'media', 'icon_stop.png')
 
 DATAFILE = os.path.join(ADDON_USER_PATH, 'ResumeSaverA.m3u')
 DATAFILE2 = os.path.join(ADDON_USER_PATH, 'ResumeSaverB.m3u')
@@ -52,7 +53,7 @@ class ResumePlayer:
     rewind_before_play = {'0': 0.0, '1': 5.0, '2': 15.0, '3': 60.0, '4': 180.0, '5': 300.0}
 
     rewind_s = rewind_before_play[get_addon_setting('rewind_before_play')]
-
+    selected_m3u_file = ''
     def main(self):
         if os.path.exists(DATAFILE) or os.path.exists(DATAFILE2):
             if not self.opendata():
@@ -79,8 +80,8 @@ class ResumePlayer:
                     xbmc.sleep(2000)
                     if get_condition('Pvr.HasTVChannels'):
                         break
-                    if counter == 0:
-                        return note('PVR Channels not available')
+                    if counter == 1:
+                        return note('''Can't resume''', 'PVR Channels not available', icon=ADDON_ICON_STOP)
 
             if self.media == 'pvr/radio':
                 for counter in range(10, 0, -1):
@@ -88,15 +89,28 @@ class ResumePlayer:
                     xbmc.sleep(2000)
                     if get_condition('PVR.HasRadioChannels'):
                         break
-                    if counter == 0:
-                        return note('PVR Channels not available')
+                    if counter == 1:
+                        return note('''Can't resume''', 'PVR Channels not available', icon=ADDON_ICON_STOP)
 
+            # load file or playlist
             if self.plsize == False:
                 xbmc.Player().play(item=self.playing, windowed=False)
             else:
-                self.plist.clear()
-                self.plist.load(self.datafile)
-                xbmc.Player().play(item=self.plist, windowed=False, startpos=self.plpos)
+                #self.plist.clear()
+                xbmc.PlayList(0).clear()
+                xbmc.PlayList(1).clear()
+                #self.plist.load(self.datafile)
+                xbmc.PlayList(0).load(self.datafile)
+                xbmc.PlayList(1).load(self.datafile)
+                #xbmc.Player().play(item=self.plist, windowed=False, startpos=self.plpos)
+                xbmc.Player().play(item=xbmc.PlayList(1), windowed=False, startpos=self.plpos)
+
+                #xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 0, "method": "Playlist.Clear", "params": {"playlistid": 0}}')
+                #xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 0, "method": "Playlist.Clear", "params": {"playlistid": 1}}')
+                #xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 0, "method": "Playlist.Add", "params": {"playlistid": 0, "item": {"recursive": true, "directory": "%s"}}}' % self.selected_m3u_file.replace('\\', '//'))
+                #xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 0, "method": "Playlist.Add", "params": {"playlistid": 1, "item": {"recursive": true, "directory": "%s"}}}' % self.selected_m3u_file.replace('\\', '//'))
+                #xbmc.executeJSONRPC('{"jsonrpc":"2.0","id":0,"method":"Player.Open","params":{"item":{"playlistid": 1, "position":%s}}}' % self.plpos)
+
 
 
         self.can_play = False
@@ -145,8 +159,10 @@ class ResumePlayer:
                 log('swapping files')
 
         try:
+            self.selected_m3u_file = firstFile
             return self.opendataex(firstFile)
         except:
+            self.selected_m3u_file = secondFile
             return self.opendataex(secondFile)
 
     def opendataex(self, datafile):
@@ -259,7 +275,7 @@ def dialog_yesno(label1, label2=None, label3=None, nolabel='', yeslabel='', auto
     if PY2:
         return xbmcgui.Dialog().yesno(ADDON_NAME, line1=label1, line2=label2, line3=label3, nolabel=nolabel, yeslabel=yeslabel, autoclose=autoclose)
     else:
-        return xbmcgui.Dialog().yesno(ADDON_NAME, message='%s%s%s' % (label1, ' - %s' % label2 if label2 else '', ' - %s' % label3 if label3 else ''), nolabel='Cancel', yeslabel='Delete', autoclose=autoclose)
+        return xbmcgui.Dialog().yesno(ADDON_NAME, message='%s%s%s' % (label1, ' - %s' % label2 if label2 else '', ' - %s' % label3 if label3 else ''), nolabel=nolabel, yeslabel=yeslabel, autoclose=autoclose)
 
 
 def debug(string):
@@ -274,7 +290,7 @@ def get_condition(condition):
 
 
 def delete_m3u():
-    if not dialog_yesno('Sure to delete M3u Files?'):
+    if not dialog_yesno('Sure to delete M3U Files?', nolabel='Cancel', yeslabel='Delete'):
         return
     file_a_deleted = False
     file_b_deleted = False

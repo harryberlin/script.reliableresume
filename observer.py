@@ -31,6 +31,7 @@ ADDON_VERSION = ADDON.getAddonInfo('version')
 ADDON_PATH = ADDON.getAddonInfo('path')
 ADDON_USER_PATH = os.path.join(xbmc_translate_path('special://userdata'), 'addon_data', ADDON_ID)
 ADDON_ICON = os.path.join(ADDON_PATH, 'icon.png')
+ADDON_ICON_STOP = os.path.join(ADDON_PATH, 'resources', 'media', 'icon_stop.png')
 MONITOR = xbmc.Monitor()
 
 DATAFILE = os.path.join(ADDON_USER_PATH, 'ResumeSaverA.m3u')
