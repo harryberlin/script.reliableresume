@@ -94,22 +94,36 @@ class ResumePlayer:
 
             # load file or playlist
             if self.plsize == False:
-                xbmc.Player().play(item=self.playing, windowed=False)
+                #xbmc.Player().play(item=self.playing, windowed=False)
+                if self.media in ['video']:
+                    xbmc.executebuiltin('PlayMedia(%s,1,noresume)' % (self.playing))
+                else:
+                    xbmc.executebuiltin('PlayMedia(%s,1)' % (self.playing))
             else:
                 #self.plist.clear()
-                xbmc.PlayList(0).clear()
-                xbmc.PlayList(1).clear()
-                #self.plist.load(self.datafile)
-                xbmc.PlayList(0).load(self.datafile)
-                xbmc.PlayList(1).load(self.datafile)
-                #xbmc.Player().play(item=self.plist, windowed=False, startpos=self.plpos)
-                xbmc.Player().play(item=xbmc.PlayList(1), windowed=False, startpos=self.plpos)
+                #xbmc.PlayList(0).clear()
+                #xbmc.PlayList(1).clear()
+                ##self.plist.load(self.datafile)
+                #xbmc.PlayList(0).load(self.datafile)
+                #xbmc.PlayList(1).load(self.datafile)
+                ##xbmc.Player().play(item=self.plist, windowed=False, startpos=self.plpos)
+                #xbmc.Player().play(item=xbmc.PlayList(1), windowed=False, startpos=self.plpos)
 
                 #xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 0, "method": "Playlist.Clear", "params": {"playlistid": 0}}')
                 #xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 0, "method": "Playlist.Clear", "params": {"playlistid": 1}}')
                 #xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 0, "method": "Playlist.Add", "params": {"playlistid": 0, "item": {"recursive": true, "directory": "%s"}}}' % self.selected_m3u_file.replace('\\', '//'))
                 #xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 0, "method": "Playlist.Add", "params": {"playlistid": 1, "item": {"recursive": true, "directory": "%s"}}}' % self.selected_m3u_file.replace('\\', '//'))
                 #xbmc.executeJSONRPC('{"jsonrpc":"2.0","id":0,"method":"Player.Open","params":{"item":{"playlistid": 1, "position":%s}}}' % self.plpos)
+                
+                if self.media in ['video']:
+                    xbmc.executebuiltin('PlayMedia(%s,1,noresume)' % (self.selected_m3u_file))
+                else:
+                    xbmc.executebuiltin('PlayMedia(%s,noresume)' % (self.selected_m3u_file))
+                if self.media in ['video']:
+                    xbmc.executeJSONRPC('{"jsonrpc":"2.0","id":0,"method":"Player.Open","params":{"item":{"playlistid": 1, "position":%s}}}' % self.plpos)
+                else:
+                    xbmc.executeJSONRPC('{"jsonrpc":"2.0","id":0,"method":"Player.Open","params":{"item":{"playlistid": 0, "position":%s}}}' % self.plpos)
+
 
 
 
